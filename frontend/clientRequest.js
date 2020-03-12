@@ -60,7 +60,6 @@ const makePayment = (stateData) => {
 	  }).catch(console.error);
 };
 
-//A rather crass implementation of checking the resultCode as onSubmit still shows the success page briefly if there's a card problem.
 
 function callServer(url, data) {
   return fetch('http://localhost:3000/payments', {
