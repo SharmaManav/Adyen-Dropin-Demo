@@ -8,6 +8,8 @@ Still running into some iframe errors with the credit card payment method though
 The [code samples](https://github.com/Adyen/adyen-components-js-sample-code) definitely helped with the implementation side of things and
 the [documentation](https://docs.adyen.com/checkout/drop-in-web) gave great instructions and overview of how everything worked together.
 
+Currently supports card and redirects based on successful purchase or not. In order to implement other payment methods like Paypal, I'll need to implement dropin.handleAction based on the action.type that the /payment response contains.
+
 Overall, fun project and for sure deepened my knowledge of APIs.
 
 # How To Run
