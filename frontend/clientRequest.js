@@ -3,10 +3,10 @@
 const paymentMethodsBody = {
 	shopperReference: 'manav test',
 	reference: 'manav test',
-	countryCode: 'NL',
+	countryCode: 'US',
 	amount: {
 		value: 2000,
-		currency: 'EUR'
+		currency: 'USD'
 	}
 };
 
@@ -15,12 +15,12 @@ const paymentMethodsBody = {
 const paymentBody = {
 	shopperReference: 'manav test',
 	reference: 'manav test',
-	countryCode: 'NL',
+	countryCode: 'US',
 	channel: 'Web',
-	returnUrl: 'http://localhost:3000',
+	returnUrl: 'http://localhost:3000/thanks',
 	amount: {
 		value: 2000,
-		currency: 'EUR'
+		currency: 'USD'
 	}
 };
 
@@ -30,7 +30,6 @@ const grabPaymentMethods = () =>
 	fetch('http://localhost:3000/paymentMethods', {
 		method: 'POST',
 		headers: {
-			Accept: 'application/json, text/plain, */*',
 			'Content-Type': 'application/json'
 		},
 		body:JSON.stringify(paymentMethodsBody)
@@ -47,12 +46,28 @@ const makePayment = (stateData) => {
 	fetch('http://localhost:3000/payments', {
 		method: 'POST',
 		headers: {
-			Accept: 'application/json, text/plain, */*',
 			'Content-Type': 'application/json'
 		},
 		body:JSON.stringify(paymentRequest)
 	}).then(response => response.json())
-	  .then(json => {
-	  	return json;
+	  .then(answer => {
+	  	if ((JSON.stringify(answer.resultCode)) != JSON.stringify("Authorised")){
+	  		window.location.href = "/unsuccessful";
+	  	} else {
+	  		window.location.href = "/success";
+	  	}
+	  	return answer;
 	  }).catch(console.error);
 };
+
+//A rather crass implementation of checking the resultCode as onSubmit still shows the success page briefly if there's a card problem.
+
+function callServer(url, data) {
+  return fetch('http://localhost:3000/payments', {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(res => res.json());
+}

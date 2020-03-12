@@ -19,6 +19,12 @@ module.exports = (() => {
 	app.all('/payments', (req, res) =>
 		sendPayment(res, req.body));
 
+	app.get('/unsuccessful', (req, res) =>
+		res.send('Sorry, there was a problem with your card.'))
+
+	app.get('/success', (req, res) =>
+		res.send('Thanks for your purchase! Please check your email for your receipt.'));
+
 	app.listen(port, () => {
 		console.log(`Starting server at ${port}`);
 	});
